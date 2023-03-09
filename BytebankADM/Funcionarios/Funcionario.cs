@@ -6,27 +6,33 @@ using System.Threading.Tasks;
 
 namespace BytebankADM.Funcionarios
 {
-    public class Funcionario
+    public abstract class Funcionario
     {
-        public string Nome { get; set; }
-        public string CPF { get; set; }
-        public double Salario { get; set; }
+        public string Nome { get; private set; }
+        public string CPF { get; private set; }
+        public double Salario { get; protected set; }
+        public static int TotalDeFuncionarios { get; private set; }
 
-        public Funcionario(string nome, string cpf, double salario) 
-        { 
+        public Funcionario(string nome, string cpf, double salario)
+        {
             this.Nome = nome;
             this.CPF = cpf;
             this.Salario = salario;
-        }    
-        
-        public double GetBonificacao() { return this.Salario * 0.1; }
+            TotalDeFuncionarios++;
+        }
+
+        public virtual double GetBonificacao() { return this.Salario * 0.1; }
+
+        public abstract void AumentaSalario();
+
 
         public void ExibeDados()
         {
-            Console.WriteLine($"Nome: { this.Nome }");
-            Console.WriteLine($"CPF: { this.CPF }");
-            Console.WriteLine($"Salário: { this.Salario }");
+            Console.WriteLine($"Nome: {this.Nome}");
+            Console.WriteLine($"CPF: {this.CPF}");
+            Console.WriteLine($"Salário: {this.Salario:F2}");
             Console.WriteLine($"Bonificação: {this.GetBonificacao():F2}");
+            Console.WriteLine();
         }
 
     }
